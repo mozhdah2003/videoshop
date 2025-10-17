@@ -3,31 +3,73 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout.html(title=#{${title}})}">
-    <head>
-    </head>
-    <body>
-        <header>
-            <h1 th:text="#{${title}}">Katalog</h1>
-        </header>
-        <nav th:insert="~{navigation :: navigation}"></nav>
-        <section layout:fragment="content">
-        <div class="ui link cards" th:remove="all-but-first">
-            <div class="ui card" th:each="disc : ${catalog}">
-                <div class="content">
-                    <a class="header" th:href="@{/disc/{id}(id=${disc.id})}" th:text="${disc.name}">Last Action Hero</a>
-                </div>
-                <div class="image">
-                    <a th:href="@{/disc/{id}(id=${disc.id})}">
-                        <img class="thumbnail" th:src="@{/resources/img/cover/{image}.jpg(image=${disc.image})}"
-                             src="../static/resources/img/cover/lac.jpg"/>
-                    </a>
-                </div>
-                <div class="content">
-                    <div class="description" th:text="${{disc.price}}">9.99 €</div>
-                </div>
-                <div class="extra content" th:text="${disc.genre}"> Action</div>
+<head>
+</head>
+<body>
+<header>
+    <!-- Fallback: Falls kein i18n-Key existiert, nutze den Plaintext -->
+    <h1 th:text="#{${title}} ?: ${title}">Katalog</h1>
+</header>
+
+<nav th:insert="~{navigation :: navigation}"></nav>
+
+<section layout:fragment="content">
+
+    <!-- ------------------------------------------------------------
+         FILM-KARTEN
+         - Listet alle Filme (aus ${catalog})
+         - Wird dynamisch mit th:each gefüllt
+         ------------------------------------------------------------ -->
+    <div class="ui link cards" th:remove="all-but-first">
+        <div class="ui card" th:each="disc : ${catalog}">
+            <div class="content">
+                <a class="header"
+                   th:href="@{/disc/{id}(id=${disc.id})}"
+                   th:text="${disc.name}">
+                    Last Action Hero
+                </a>
             </div>
+
+            <div class="image">
+                <a th:href="@{/disc/{id}(id=${disc.id})}">
+                    <img class="thumbnail"
+                         th:src="@{/resources/img/cover/{image}.jpg(image=${disc.image})}"
+                         src="../static/resources/img/cover/lac.jpg" />
+                </a>
+            </div>
+
+            <div class="content">
+                <div class="description" th:text="${{disc.price}}">9.99 €</div>
+            </div>
+
+            <div class="extra content" th:text="${disc.genre}">Action</div>
         </div>
-        </section>
-    </body>
+    </div>
+
+    <!-- ------------------------------------------------------------
+         SORTING CONTROLS (unterhalb der Karten)
+         - Sortiert Filme nach Preis
+         - Zeigt aktive Richtung an (asc/desc)
+         ------------------------------------------------------------ -->
+    <div class="ui segment" style="margin-top: 1.5rem;">
+        <strong th:text="#{catalog.sort.price} ?: 'Sort by price:'">Sort by price:</strong>
+
+        <div class="ui buttons" style="margin-left: .75rem;">
+            <a class="ui button"
+               th:href="@{'/catalog/sort?dir=asc'}"
+               th:classappend="${dir} == 'asc' or ${dir} == null ? ' primary' : ''">
+                💰 Low → High
+            </a>
+            <div class="or" data-text="or"></div>
+            <a class="ui button"
+               th:href="@{'/catalog/sort?dir=desc'}"
+               th:classappend="${dir} == 'desc' ? ' primary' : ''">
+                💰 High → Low
+            </a>
+        </div>
+    </div>
+    <!-- ------------------------------------------------------------ -->
+
+</section>
+</body>
 </html>

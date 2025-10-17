@@ -35,7 +35,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 // ------------------------------------------------------------
-// NEW: imports for price sorting
+//  imports for price sorting
 // ------------------------------------------------------------
 import org.springframework.web.bind.annotation.RequestParam;
 import java.math.BigDecimal;
@@ -108,7 +108,7 @@ class CatalogController {
 		return "redirect:/disc/" + disc.getId();
 	}
     // -----------------------------------------------------
-    // NEW: tiny helpers to sort by price
+    //  tiny helpers to sort by price
     // --------------------------------------------------------
 
     /** Return price as BigDecimal so we can compare easily. */
@@ -124,7 +124,7 @@ class CatalogController {
     }
 
     // ------------------------------------------------------------
-    // NEW: ONE unified route – sorts ALL films by price (no type distinction = all films)
+    // ONE unified route – sorts ALL films by price (no type distinction = all films)
     // ------------------------------------------------------------
     @GetMapping("/catalog/sort")
     String sortWholeCatalogByPrice(
@@ -142,7 +142,7 @@ class CatalogController {
 
         // 4) Hand over to the same template
         model.addAttribute("catalog", sorted);
-        // hier einen i18n-Key setzen, falls vorhanden – sonst Plaintext:
+        // i18n key = a translation key used to show text in different languages, just in case for language options
         model.addAttribute("title", "All films (sorted by price)");
         model.addAttribute("sort", "price");
         model.addAttribute("dir", ascending ? "asc" : "desc");
