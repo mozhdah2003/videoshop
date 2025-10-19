@@ -14,6 +14,25 @@
 
 <section layout:fragment="content">
 
+   // buttons first
+    <div class="ui segment" style="margin-bottom: 1.5rem;">
+        <strong>Sort by price:</strong>
+        <div class="ui buttons" style="margin-left:.75rem;">
+            <a class="ui button"
+               th:href="@{'/catalog/sort?dir=asc'}"
+               th:classappend="${dir == 'asc' or dir == null ? ' primary' : ''}">
+                💰 Low → High
+            </a>
+            <div class="or" data-text="or"></div>
+            <a class="ui button"
+               th:href="@{'/catalog/sort?dir=desc'}"
+               th:classappend="${dir == 'desc' ? ' primary' : ''}">
+                💰 High → Low
+            </a>
+        </div>
+    </div>
+   // now buttons should work
+
     <div class="ui link cards" th:remove="all-but-first">
         <div class="ui card" th:each="disc : ${catalog}">
             <div class="content">
@@ -37,23 +56,6 @@
             </div>
 
             <div class="extra content" th:text="${disc.genre}">Action</div>
-        </div>
-    </div>
-
-    <div class="ui segment" style="margin-top: 1.5rem;">
-        <strong>Sort by price:</strong>
-        <div class="ui buttons" style="margin-left:.75rem;">
-            <a class="ui button"
-               th:href="@{'/catalog/sort?dir=asc'}"
-               th:classappend="${dir == 'asc' or dir == null ? ' primary' : ''}">
-                💰 Low → High
-            </a>
-            <div class="or" data-text="or"></div>
-            <a class="ui button"
-               th:href="@{'/catalog/sort?dir=desc'}"
-               th:classappend="${dir == 'desc' ? ' primary' : ''}">
-                💰 High → Low
-            </a>
         </div>
     </div>
 
