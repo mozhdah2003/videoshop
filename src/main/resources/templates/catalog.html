@@ -14,7 +14,7 @@
 
 <section layout:fragment="content">
 
-   // buttons first
+
     <div class="ui segment" style="margin-bottom: 1.5rem;">
         <strong>Sort by price:</strong>
         <div class="ui buttons" style="margin-left:.75rem;">
@@ -31,7 +31,7 @@
             </a>
         </div>
     </div>
-   // now buttons should work
+
 
     <div class="ui link cards" th:remove="all-but-first">
         <div class="ui card" th:each="disc : ${catalog}">
